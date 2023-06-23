@@ -2,7 +2,7 @@ import { Highlight } from "@alexjball/react-instantsearch-hooks-web"
 import { maple } from "components/links"
 import { Hit } from "instantsearch.js"
 import Link from "next/link"
-import { Card, Col } from "../../bootstrap"
+import { Card, Col, Image } from "../../bootstrap"
 import { formatBillId } from "../../formatting"
 import { ListGroup } from "react-bootstrap" // Need to move this into bootstrap components file?
 
@@ -29,7 +29,7 @@ export const GlobalBillHit = ({ hit }: { hit: Hit<BillRecord> }) => {
     <Link href={url}>
       <a style={{ all: "unset" }} className="w-100">
         <ListGroup.Item>
-          <img src="./BillSearchResult.svg" alt="Bill Icon" />
+          <Image src="/BillSearchResult.svg" alt="Bill Icon" />
           <div>
             <h6>
               {formatBillId(hit.number)} -{" "}
