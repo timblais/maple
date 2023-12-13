@@ -165,7 +165,11 @@ function ShowPaginationSummary({
   t
 }: {
   testimony: Testimony[]
-  pagination: { currentPage: number; itemsPerPage: number }
+  pagination: {
+    currentPage: number
+    itemsPerPage: number
+    hasNextPage: boolean
+  }
   t: TFunction
 }) {
   if (testimony.length < 1) {
@@ -173,17 +177,19 @@ function ShowPaginationSummary({
   }
   const { currentPage, itemsPerPage } = pagination
 
-  const currentPageStart = (currentPage - 1) * itemsPerPage
-  let currentPageEnd = currentPage * itemsPerPage
-  if (currentPageEnd > testimony.length) {
-    currentPageEnd = currentPageStart + (testimony.length % itemsPerPage)
-  }
-  const totalItems = testimony.length
+  const hasNextPage = pagination.hasNextPage
+  const currentPageStart = (currentPage - 1) * itemsPerPage + 1
+  const currentPageEnd = currentPageStart + testimony.length - 1
+
+  const totalItems = hasNextPage
+    ? t("viewTestimony.outOfMany")
+    : `${t("viewTestimony.outOf")} ${
+        (currentPage - 1) * itemsPerPage + testimony.length
+      }`
 
   return (
     <Col className="d-flex align-items-center">
-      {t("viewTestimony.showing")} {currentPageStart + 1}&ndash;{currentPageEnd}{" "}
-      {t("viewTestimony.outOf")}
+      {t("viewTestimony.showing")} {currentPageStart}&ndash;{currentPageEnd}{" "}
       {totalItems}
     </Col>
   )
